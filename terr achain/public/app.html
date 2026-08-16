@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TerraChain</title>
+<link rel="stylesheet" href="/assets/app.css">
+</head>
+<body>
+<div id="app">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark">TC</span><span>TerraChain</span></div>
+    <nav id="nav">
+      <a href="#dashboard">Dashboard</a>
+      <a href="#parcels">Land parcels</a>
+      <a href="#applications">Applications</a>
+      <a href="#tenders">Tenders</a>
+      <a href="#bids">Bids</a>
+      <a href="#contracts">Contracts</a>
+      <a href="#payments">Payments</a>
+      <a href="#documents">Documents</a>
+      <a href="#organizations">Organizations</a>
+      <a href="#integrations">Institutions</a>
+      <a href="#chat">Chat <span id="chatBadge" class="chip hidden"></span></a>
+      <a href="#audit">Audit log</a>
+      <a href="#integrity">Integrity</a>
+      <a href="#admin">Administration</a>
+    </nav>
+    <div class="who">
+      <div class="name" id="whoName">…</div>
+      <div id="whoRole"></div>
+      <div style="margin-top:8px"><a href="#" id="logoutLink" style="color:#a9cbb8">Sign out</a></div>
+    </div>
+  </aside>
+  <main class="main">
+    <header>
+      <h2 id="pageTitle">Dashboard</h2>
+      <p class="sub" id="pageSub"></p>
+    </header>
+    <div id="msg" class="msg msg-error"></div>
+    <div id="view"></div>
+  </main>
+</div>
+<script src="/assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in — TerraChain</title>
+<link rel="stylesheet" href="/assets/app.css">
+</head>
+<body>
+<div class="auth-wrap">
+  <div class="auth-card">
+    <div class="brand">
+      <span class="brand-mark">TC</span>
+      <h1>TerraChain</h1>
+    </div>
+    <p class="tag">Land administration &amp; procurement transparency — Federal Democratic Republic of Ethiopia</p>
+
+    <div id="msg" class="msg msg-error"></div>
+    <form id="loginForm" autocomplete="off">
+      <label for="username">Username</label>
+      <input id="username" name="username" autocomplete="username" required>
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required>
+      <button type="submit" class="btn btn-block" id="btn">Sign in</button>
+    </form>
+    <p class="eth-date" id="ethDate"></p>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var csrf = '';
+  var jar = [];
+
+  function fetchJson(path, options) {
+    return fetch(path, options).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (body) {
+        return { status: r.status, body: body };
+      });
+    });
+  }
+
+  function showMsg(text, type) {
+    var m = document.getElementById('msg');
+    m.textContent = text;
+    m.className = 'msg show msg-' + (type || 'error');
+  }
+
+  function getCsrf() {
+    return fetchJson('/api/v1/auth/csrf').then(function (r) {
+      csrf = r.body.data.csrf;
+    });
+  }
+
+  function ethDate() {
+    return fetchJson('/api/v1/system/settings').then(function (r) {
+      return r.status === 200 ? '' : '';
+    }).catch(function () { return ''; });
+  }
+
+  document.getElementById('loginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var btn = document.getElementById('btn');
+    btn.disabled = true;
+    btn.textContent = 'Signing in\u2026';
+    getCsrf().then(function () {
+      return fetchJson('/api/v1/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: document.getElementById('username').value.trim(),
+          password: document.getElementById('password').value,
+          _csrf: csrf
+        })
+      });
+    }).then(function (r) {
+      if (r.status === 200) {
+        window.location.href = '/app.html';
+        return;
+      }
+      btn.disabled = false;
+      btn.textContent = 'Sign in';
+      var errs = r.body.errors || [];
+      var extra = errs.length ? ' — ' + errs.join('\n') : '';
+      showMsg(r.body.message || 'Login failed' + extra);
+      getCsrf(); /* rotation after failure */
+    }).catch(function (err) {
+      btn.disabled = false;
+      btn.textContent = 'Sign in';
+      showMsg('Cannot reach the server: ' + err.message);
+    });
+  });
+})();
+</script>
+</body>
+</html>
