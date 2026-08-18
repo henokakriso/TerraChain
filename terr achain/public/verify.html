@@ -10,15 +10,15 @@
 <div class="verify-wrap">
   <div class="verify-card">
     <div class="seal seal-good" id="seal">?</div>
-    <h1>TerraChain document verification</h1>
-    <p class="meta" id="result">Enter a verification token below. Only minimal public information is shown (spec section 25).</p>
+    <h1>Document Verification</h1>
+    <p class="meta" id="result">Enter a verification token below to inspect document status and integrity logs (standards section 25).</p>
     <div style="height:14px"></div>
     <form id="vf">
       <label for="token">Verification token</label>
       <input id="token" name="token" autocomplete="off" required placeholder="e.g. UDIRUNVUFV...">
       <button type="submit" class="btn btn-block">Verify document</button>
     </form>
-    <p class="meta" id="foot" style="margin-top:22px;font-size:11px">TerraChain — Federal Democratic Republic of Ethiopia</p>
+    <p class="meta" id="foot" style="margin-top:22px;font-size:11px;text-align:center">TerraChain — Federal Democratic Republic of Ethiopia</p>
   </div>
 </div>
 
@@ -32,9 +32,9 @@
 
   function set(ok, title, lines) {
     seal.className = 'seal ' + (ok ? 'seal-good' : 'seal-bad');
-    seal.textContent = ok ? '\u2713' : '\u2717';
-    var html = '<b style="font-size:16px">' + title + '</b><br>';
-    lines.forEach(function (l) { html += l + '<br>'; });
+    seal.textContent = ok ? '✓' : '✗';
+    var html = '<b style="font-size:16px; display:block; margin-bottom:8px">' + title + '</b>';
+    lines.forEach(function (l) { html += '<div style="margin-top:4px">' + l + '</div>'; });
     result.innerHTML = html;
   }
 
@@ -47,7 +47,7 @@
     e.preventDefault();
     var token = tokenInput.value.trim();
     if (!token) return;
-    result.textContent = 'Verifying\u2026';
+    result.textContent = 'Verifying…';
     fetch('/api/v1/verification/' + encodeURIComponent(token))
       .then(function (r) { return r.json().then(function (b) { return { status: r.status, body: b }; }); })
       .then(function (r) {

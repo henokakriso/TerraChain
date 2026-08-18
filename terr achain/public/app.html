@@ -7,8 +7,15 @@
 <link rel="stylesheet" href="/assets/app.css">
 </head>
 <body>
+
+<!-- Mobile hamburger -->
+<button class="hamburger" id="hamburger" aria-label="Open menu">
+  <i></i><i></i><i></i>
+</button>
+<div class="sidebar-overlay" id="overlay"></div>
+
 <div id="app">
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
     <div class="brand"><span class="brand-mark">TC</span><span>TerraChain</span></div>
     <nav id="nav">
       <a href="#dashboard">Dashboard</a>
@@ -29,7 +36,7 @@
     <div class="who">
       <div class="name" id="whoName">…</div>
       <div id="whoRole"></div>
-      <div style="margin-top:8px"><a href="#" id="logoutLink" style="color:#a9cbb8">Sign out</a></div>
+      <div style="margin-top:8px"><a href="#" id="logoutLink" style="color:rgba(255,255,255,0.45)">Sign out</a></div>
     </div>
   </aside>
   <main class="main">
@@ -41,6 +48,31 @@
     <div id="view"></div>
   </main>
 </div>
+
+<script>
+// Mobile sidebar toggle
+(function () {
+  var btn = document.getElementById('hamburger');
+  var sidebar = document.getElementById('sidebar');
+  var overlay = document.getElementById('overlay');
+  function open() {
+    sidebar.classList.add('open');
+    overlay.classList.add('open');
+  }
+  function close() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('open');
+  }
+  btn.addEventListener('click', function () {
+    sidebar.classList.contains('open') ? close() : open();
+  });
+  overlay.addEventListener('click', close);
+  // Close on nav link tap (mobile)
+  document.getElementById('nav').addEventListener('click', function (e) {
+    if (e.target.tagName === 'A') close();
+  });
+})();
+</script>
 <script src="/assets/app.js"></script>
 </body>
 </html>
