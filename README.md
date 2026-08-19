@@ -1,6 +1,16 @@
-# TerraChain — Land & Procurement Transparency Infrastructure
+# TerraChain — Land & Procurement Transparency
 
-## Overview
+**TerraChain** is a blockchain-based transparency platform focused on land
+administration and public procurement. It creates verifiable records for
+important transactions and administrative events, reducing opportunities for
+unauthorized modification and improving traceability — property records,
+ownership history, transfers, procurement processes, decisions, contracts, and
+transaction histories.
+
+**Core vision:** Build trustworthy and auditable digital infrastructure for
+land and public procurement.
+
+Part of [Project ARWE](https://github.com/henokakriso).
 
 TerraChain is an ARWE project providing a secure, transparent and auditable
 digital infrastructure for **land administration and government procurement
